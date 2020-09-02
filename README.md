@@ -1,38 +1,69 @@
-# Game of Life
+# Quantum web test
 
-A simple WebSocket-based Game of Life build with [django-channels](https://github.com/django/channels) and [React](https://github.com/facebook/react) for exploration or educational purposes.
+Тестовое задание от компании Russian Quantum Center (Москва)
 
-![preview](/doc/screenshot.png)
+##Квантовый веб интерфейс
+**1. Основная задача**
+
+1.1. Реализовать веб-интерфейс для удаленного вычислительного модуля (см. архитектуру на рисунке 1)
+
+![preview](/doc/ris1.png)
+
+Рис. 1. Архитектура системы
+
+1.2. Скетч frontend интерфейса представлен на рисунке 2.
+
+![preview](/doc/ris2.png)
+
+Рис. 2. Скетч веб-интерфейса
+
+1.3. Основной сценарий использования системы описывается в несколько шагов:
+
+- Пользователь открывает страницу (график пустой)
+- Нажимает кнопку Start
+- Сервер генерирует случайную матрицу и запускает метод solve\_qubo из sdk-mock (см. пример в файле test.py)
+- В процессе решения sdk пердиодически выдает найденное значение энергии через callback-функцию (см. _energy_в файле test.py)
+- Полученные значения энергии отображаются на стороне клиента в реальном времени на графике с отметкой о времени
+
+1.4. Вычислительный модуль предоставляется в виде отдельного файла (см. sdk-mock.zip)
+
+1.5. Предпочтительный стек технологий – python + django + react.
+
+1.6. Авторизацию, шифрование и прочие вспомогательные функции реализовывать не требуется.
+
+**2. Конечный результат**
+
+2.1. Ссылка на приватный gitlab репозитарий или файл с исходником
+
+2.2. ip-адрес запущенного сервера
+
+## Решение:
+
+![preview](/doc/Quantum_web_test.gif)
 
 ## How to run it locally
 
-You need the following requirements installed on your machine:
-
-- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
-- [NodeJS](https://nodejs.org/en/)
-
-Docker wraps all the backend: Python, Django, Redis.
-
-NodeJS serve the frontend through [webpack](https://github.com/webpack/webpack).
-I personally use [nvm](https://github.com/creationix/nvm) with a Node 6.
+```bash
+# Build and run docker containers: Redis & Centry & the django app
+make run
+```
 
 **Run backend**
 
 ```bash
-# Build and run two docker containers: Redis & the django app
-make run-backend
+# Build and run docker containers: Redis & Centry & the django app
+make bk-start
 ```
 
-The backend will be available at `http://localhost:8000`.
+Available at `http://localhost:8000`.
 
 **Run frontend**
 
 ```bash
-npm install       # Install node dependencies
-make run-frontend # Serve the web app
+make ft-run # Serve the web app
 ```
 
-The frontend will be available at `http://localhost:8080`.
+Available at `http://localhost:8080`.
 
 ## Extras
 
@@ -40,11 +71,6 @@ The frontend will be available at `http://localhost:8080`.
 
 You can use the [Redux Devtools](https://github.com/gaearon/redux-devtools) on this app.
 
-**Life fixtures**
-
-Different fixtures are available in `src/backend/life/game/fixtures.py`.
-
-You can change the [default Board parameter](https://github.com/Kmaschta/GameOfLife/blob/ae90e531af8d48d70c657d4244073437bc649832/src/backend/life/game/board.py#L9) (replace `eyes` by `generator` or `fleet`).
-
 ## License
 This piece of code is licensed under [MIT License](/LICENSE).
+
