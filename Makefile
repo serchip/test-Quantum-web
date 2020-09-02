@@ -8,6 +8,10 @@ endif
 DC_BACKEND_CMD = docker-compose -f ${DC_BACKEND_FILE}
 DC_FRONTEND_CMD = docker-compose -f ${DC_FRONTEND_FILE}
 
+run:
+	$(DC_BACKEND_CMD) up -d
+	$(DC_FRONTEND_CMD) up -d
+
 bk-start:
 	$(DC_BACKEND_CMD) up
 

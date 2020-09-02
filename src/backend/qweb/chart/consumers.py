@@ -6,7 +6,7 @@ from .tasks import cart_energy
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = 'chart_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(
@@ -27,17 +27,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         if text_data == 'start':
             cart_energy.delay()
-        # text_data_json = json.loads(text_data)
-        # message = text_data_json['message']
-        #
-        # # Send message to room group
-        # await self.channel_layer.group_send(
-        #     self.room_group_name,
-        #     {
-        #         'type': 'chat_message',
-        #         'message': message
-        #     }
-        # )
 
     # Receive message from room group
     async def chat_message(self, event):
