@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+    redis:
+        image: redis
+        ports:
+          - "6379:6379"
+    web:
+        build: .
+        command: python ./qweb/manage.py runserver 0.0.0.0:8008
+        tty: true
+        volumes:
+            - .:/code
+        ports:
+            - "8008:8008"
+        depends_on:
+            - redis
+    celery:
+        build: .
+        environment:
+          - COLUMNS=80
+        entrypoint:
+          - /bin/bash
+          - -c
+          - |
+            cd qweb
+            celery worker -A qweb --loglevel=debug --concurrency=4
+        tty: true
+        volumes:
+            - .:/code
+        depends_on:
+            - redis
+
+networks:
+    default:
+        name: quantum_web

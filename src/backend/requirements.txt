@@ -1,0 +1,10 @@
+Django
+psycopg2
+redis==3.2.1
+asgi_redis
+channels
+channels_redis
+numpy
+celery
+
+scipy
